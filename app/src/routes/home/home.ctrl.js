@@ -20,10 +20,14 @@ const process = {
     const response = await user.login();
     return res.json(response);
   },
-  register: (req, res) => {
+  register: async (req, res) => {
     const user = new User(req.body);
-    const response = user.register();
-    return res.json(response);
+    try {
+      const response = await user.register();
+      return res.json(response);
+    } catch (err) {
+      return res.json({ success: false, msg: err });
+    }
 
   }
 };
